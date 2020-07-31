@@ -11,33 +11,15 @@ module.exports = async (req, res, next) => {
                 audience: process.env.CLIENT_ID,
             });
 
-            if (ticket && ticket.getPayload()) {
-                req.payload = ticket.getPayload();
-                req.isAuth = true;
-                next();
-            } else {
-                req.isAuth = false;
-                next();
-            }
+            req.payload = ticket.getPayload();
+            req.isAuth = true;
+            next();
         } catch (error) {
-            console.log('Catch err: ');
-            req.isAuth = false;
-            return next();
+            console.log('Token err: ', error);
+            res.status(401).json({});
         }
     } else {
-        req.isAuth = 'Unauthorized';
-        return next();
+        console.log('Unauthorized');
+        res.status(401).json({});
     }
 };
-
-// async function verify(token) {
-//     const ticket = await client.verifyIdToken({
-//         idToken: token,
-//         audience: process.env.CLIENT_ID,
-//     });
-
-//     const payload = ticket.getPayload();
-//     const userid = payload['sub'];
-
-//     return { payload, userid };
-// }

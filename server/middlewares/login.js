@@ -13,8 +13,6 @@ module.exports = async (req, res, next) => {
 
         const payload = ticket.getPayload();
 
-        console.log('Payload: ', payload);
-
         const existingUser = await User.findOne({
             email: payload.email,
         });

@@ -1,21 +1,24 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 export default createMuiTheme({
-  typography: {
-    useNextVariants: true,
-    color: '#fff',
-  },
-  palette: {
-    type: 'dark',
-    primary: {
-      main: '#E535AB'
+    // typography: {
+    //     useNextVariants: true,
+    //     color: "#fff",
+    // },
+    palette: {
+        type: "dark",
+        primary: {
+            main: "#2196f3",
+            light: "#4dabf5",
+            dark: "#1769aa",
+        },
+        secondary: {
+            main: "#76ff03",
+            light: "#91ff35",
+            dark: "#52b202",
+        },
+        contrastThreshold: 3,
+        tonalOffset: 0.2,
+        contrastText: "#fff",
     },
-    secondary: blue,
-    error: red,
-    contrastThreshold: 3,
-    tonalOffset: 0.2,
-    contrastText: '#fff',
-  }
 });

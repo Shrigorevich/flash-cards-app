@@ -5,7 +5,11 @@ module.exports = {
         console.log('Me', req.isAuth);
 
         if (req.isAuth) {
-            return req.payload;
+            return {
+                first_name: req.payload.given_name,
+                last_name: req.payload.family_name,
+                email: req.payload.email,
+            };
         } else {
             return null;
         }

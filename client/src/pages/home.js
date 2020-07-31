@@ -1,10 +1,52 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import Dashboard from "../components/Dashboard";
 
-const Home = () => {
-    return <div></div>;
+const Home = (props) => {
+    // const makeRequest = async () => {
+    //     console.log("makeRequest");
+
+    //     const query = `
+    //         query{
+    //             deckList{
+    //                 name,
+    //                 description
+    //             }
+    //         }
+    //     `;
+
+    //     const response = await fetch("http://localhost:5000/graphql", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "x-auth-token": `${localStorage.getItem("token")}sdf`,
+    //         },
+    //         body: JSON.stringify({
+    //             query,
+    //             //variables: { dice, sides },
+    //         }),
+    //     });
+
+    //     const data = await response.json();
+    //     console.log("Data: ", data);
+    // };
+
+    return !props.user ? null : (
+        <div>
+            <Dashboard />
+            <div></div>
+        </div>
+    );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+    console.log("Home: ", state);
+    return {
+        user: state.auth.user,
+    };
+};
+
+export default connect(mapStateToProps, null)(Home);
 //id: "5f1ac6dfc745220fa44ea363",
 //id: "5f17415b280bfc3724170a40",
 

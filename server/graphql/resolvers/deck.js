@@ -42,7 +42,6 @@ module.exports = {
     },
 
     deckList: async (args, req) => {
-        console.log('Deck list');
         try {
             //TODO: USER ID FILTER
             return Deck.find();

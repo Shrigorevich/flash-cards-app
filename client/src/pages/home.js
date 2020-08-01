@@ -1,37 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import Dashboard from "../components/Dashboard";
+import { useHistory } from "react-router-dom";
+import Redirect from "../components/Redirect";
 
 const Home = (props) => {
-    // const makeRequest = async () => {
-    //     console.log("makeRequest");
+    //console.log();
 
-    //     const query = `
-    //         query{
-    //             deckList{
-    //                 name,
-    //                 description
-    //             }
-    //         }
-    //     `;
+    const { loading, error } = useSelector((state) => {
+        return {
+            loading: state.app.loading,
+            error: state.auth.error,
+        };
+    });
 
-    //     const response = await fetch("http://localhost:5000/graphql", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "x-auth-token": `${localStorage.getItem("token")}sdf`,
-    //         },
-    //         body: JSON.stringify({
-    //             query,
-    //             //variables: { dice, sides },
-    //         }),
-    //     });
+    if (loading) return <div>LOADNING....</div>;
+    if (error || !localStorage.getItem("token")) return <Redirect />;
 
-    //     const data = await response.json();
-    //     console.log("Data: ", data);
-    // };
-
-    return !props.user ? null : (
+    return (
         <div>
             <Dashboard />
             <div></div>
@@ -40,7 +26,7 @@ const Home = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    console.log("Home: ", state);
+    //console.log("Home: ", state.auth);
     return {
         user: state.auth.user,
     };

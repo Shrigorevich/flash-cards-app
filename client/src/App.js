@@ -12,7 +12,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 const App = (props) => {
     useEffect(() => {
         props.getProfile();
-    });
+    }, []);
 
     return (
         <MuiThemeProvider theme={theme}>

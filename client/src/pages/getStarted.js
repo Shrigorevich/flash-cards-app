@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
-import { useHistory, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { googleAuth, logOut } from "./../redux/actions";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
@@ -54,8 +54,9 @@ const GetStarted = (props) => {
     const dispatch = useDispatch();
 
     const responseGoogle = async (GoogleUser) => {
-        dispatch(googleAuth(GoogleUser.getAuthResponse().id_token));
-        history.push("/home");
+        dispatch(googleAuth(GoogleUser.getAuthResponse().id_token)).then(() => {
+            history.push("/home");
+        });
     };
 
     const logOutUser = () => {
@@ -102,7 +103,6 @@ const GetStarted = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         user: state.auth.user,
     };

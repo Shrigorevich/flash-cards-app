@@ -20,7 +20,6 @@ const Home = (props) => {
     return (
         <div>
             <Dashboard />
-            <div></div>
         </div>
     );
 };

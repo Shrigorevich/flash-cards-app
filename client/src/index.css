@@ -6,3 +6,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 } */
+
+.canvas-wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+.app-canvas {
+    background-color: cornsilk;
+    border: 5px;
+    border-color: black;
+}

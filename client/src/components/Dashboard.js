@@ -3,19 +3,14 @@ import clsx from "clsx";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+
 import {
-    Drawer,
-    Box,
     AppBar,
+    Avatar,
+    Button,
     Toolbar,
-    List,
     Typography,
-    Divider,
-    IconButton,
-    Badge,
     Container,
-    Grid,
-    Paper,
     Link,
 } from "@material-ui/core";
 
@@ -23,151 +18,101 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: "flex",
-    },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-end",
-        padding: "0 8px",
-        ...theme.mixins.toolbar,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(["width", "margin"], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(["width", "margin"], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: 36,
-    },
-    menuButtonHidden: {
-        display: "none",
-    },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: "relative",
-        whiteSpace: "nowrap",
-        width: drawerWidth,
-        transition: theme.transitions.create("width", {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: "hidden",
-        transition: theme.transitions.create("width", {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up("sm")]: {
-            width: theme.spacing(9),
+    "@global": {
+        ul: {
+            margin: 0,
+            padding: 0,
+            listStyle: "none",
         },
     },
-    appBarSpacer: theme.mixins.toolbar,
-
-    paper: {
-        padding: theme.spacing(2),
-        display: "flex",
-        overflow: "auto",
-        flexDirection: "column",
+    appBar: {
+        borderBottom: `1px solid ${theme.palette.divider}`,
     },
-    fixedHeight: {
-        height: 240,
+    toolbar: {
+        flexWrap: "wrap",
+    },
+    toolbarTitle: {
+        flexGrow: 1,
+    },
+    link: {
+        margin: theme.spacing(1, 1.5),
+    },
+    user: {
+        display: "flex",
+        alignItems: "center",
+    },
+    avatar: {
+        margin: theme.spacing(0, 1, 0, 0),
     },
 }));
 
 const Dashboard = (props) => {
     const classes = useStyles();
 
-    const [open, setOpen] = useState(false);
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    // const [open, setOpen] = useState(false);
+    // const handleDrawerOpen = () => {
+    //     setOpen(true);
+    // };
+    // const handleDrawerClose = () => {
+    //     setOpen(false);
+    // };
 
     return (
-        <div>
-            <AppBar
-                position="absolute"
-                className={clsx(classes.appBar, open && classes.appBarShift)}
-            >
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(
-                            classes.menuButton,
-                            open && classes.menuButtonHidden
-                        )}
+        <AppBar
+            position="static"
+            color="default"
+            elevation={0}
+            className={classes.appBar}
+        >
+            <Toolbar className={classes.toolbar}>
+                <Typography
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                    className={classes.toolbarTitle}
+                >
+                    Fleshit
+                </Typography>
+                <nav>
+                    <Link
+                        variant="button"
+                        color="textPrimary"
+                        href="#"
+                        className={classes.link}
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography
-                        component="h1"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        className={classes.title}
+                        Features
+                    </Link>
+                    <Link
+                        variant="button"
+                        color="textPrimary"
+                        href="#"
+                        className={classes.link}
                     >
-                        Dashboard
-                    </Typography>
-                    <Typography component="span">
-                        {props.user
-                            ? `${props.user.first_name} ${props.user.last_name}`
-                            : null}
-                    </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(
-                        classes.drawerPaper,
-                        !open && classes.drawerPaperClose
-                    ),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List></List>
-                <Divider />
-                <List></List>
-            </Drawer>
-        </div>
+                        Enterprise
+                    </Link>
+                    <Link
+                        variant="button"
+                        color="textPrimary"
+                        href="#"
+                        className={classes.link}
+                    >
+                        Support
+                    </Link>
+                </nav>
+
+                {props.user ? (
+                    <div className={classes.user}>
+                        <Avatar className={classes.avatar}>
+                            {props.user.first_name.slice(0, 1)}
+                        </Avatar>
+                        <Typography component="span">
+                            {props.user.first_name + " " + props.user.last_name}
+                        </Typography>
+                    </div>
+                ) : null}
+            </Toolbar>
+        </AppBar>
     );
 };
 

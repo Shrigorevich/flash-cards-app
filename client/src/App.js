@@ -5,6 +5,7 @@ import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 
 import theme from "./components/theme";
 import Home from "./pages/home";
+import JeroniaMap from "./pages/jeroniaMap";
 import GetStarted from "./pages/getStarted";
 import { getProfile } from "./redux/actions";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -22,8 +23,11 @@ const App = (props) => {
                     <Route path="/home">
                         <Home />
                     </Route>
-                    <Route path="/">
+                    <Route path="/" exact>
                         <GetStarted />
+                    </Route>
+                    <Route path="/map">
+                        <JeroniaMap />
                     </Route>
                 </Switch>
             </Router>

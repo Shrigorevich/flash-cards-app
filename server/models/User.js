@@ -7,6 +7,11 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, trim: true, required: true },
     first_name: { type: String, trim: true, required: false },
     last_name: { type: String, trim: true, required: false },
+    recent_activity: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Deck',
+        required: false,
+    },
 });
 
 UserSchema.plugin(timestamps);

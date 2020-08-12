@@ -5,6 +5,7 @@ import {
     FETCH_DECKS,
     SHOW_LOADER,
     HIDE_LOADER,
+    CREATE_DECK,
 } from "./types";
 
 export function googleAuth(token) {
@@ -45,6 +46,7 @@ export function getProfile() {
                         query: `
                         query{
                             me{
+                                _id
                                 first_name
                                 last_name
                                 email
@@ -70,6 +72,7 @@ export function getProfile() {
                     payload: json?.data.me,
                     error: null,
                 });
+                dispatch(fetchDecks(json.data.me._id));
                 dispatch(hideLoader());
             } catch (error) {
                 console.log(error);
@@ -94,16 +97,21 @@ export function logOut() {
     };
 }
 
-export function fetchDecks() {
-    console.log("fetch decks");
+export function fetchDecks(userId) {
     return async (dispatch) => {
         if (localStorage.getItem("token")) {
             try {
                 const query = `
-                    query{
-                        deckList{
+                    query($userId: ID!){
+                        deckList(userId: $userId){
                             name,
-                            description
+                            description,
+                            cards_number,
+                            public,
+                            user{
+                                first_name,
+                                last_name
+                            }
                         }
                     }
                 `;
@@ -116,6 +124,9 @@ export function fetchDecks() {
                     },
                     body: JSON.stringify({
                         query,
+                        variables: {
+                            userId,
+                        },
                     }),
                 });
 
@@ -133,7 +144,67 @@ export function fetchDecks() {
                 });
             } catch (error) {
                 console.log(error);
-                localStorage.removeItem("token");
+                //localStorage.removeItem("token");
+            }
+        }
+    };
+}
+
+export function createDeck(userId) {
+    return async (dispatch) => {
+        if (localStorage.getItem("token")) {
+            try {
+                const query = `
+                mutation($deck: DeckInput!){
+                    createDeck(deck: $deck){
+                      name,
+                      description,
+                      public,
+                      cards_number,
+                      user{
+                        first_name,
+                        last_name
+                      }
+                    }
+                  }
+                `;
+
+                const response = await fetch("http://localhost:5000/graphql", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-auth-token": `${localStorage.getItem("token")}`,
+                    },
+                    body: JSON.stringify({
+                        query,
+                        variables: {
+                            deck: {
+                                name: "First test vocabulary ",
+                                description:
+                                    "words related to my specialization",
+                                public: false,
+                                cards_number: 3,
+                                user: userId,
+                            },
+                        },
+                    }),
+                });
+
+                if (!response.ok) {
+                    console.log(response);
+                    throw new Error("Bad token");
+                }
+
+                const json = await response.json();
+                console.log("Json: ", json);
+
+                dispatch({
+                    type: CREATE_DECK,
+                    payload: json?.data,
+                });
+            } catch (error) {
+                console.log(error);
+                //localStorage.removeItem("token");
             }
         }
     };

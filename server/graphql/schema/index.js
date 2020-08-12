@@ -2,7 +2,8 @@ const graphql = require('graphql');
 
 module.exports = graphql.buildSchema(`
     type User {
-        email: String!
+        _id: ID!
+        email: String
         first_name: String!
         last_name: String!
     }
@@ -18,14 +19,17 @@ module.exports = graphql.buildSchema(`
         _id: ID
         name: String!
         description: String
-        userId: ID
+        user: User!
         public: Boolean!
+        cards_number: Int!
     }
 
     input DeckInput {
         name: String!
         description: String
         public: Boolean!
+        user: ID!
+        cards_number: Int!
     }
 
     type Card {
@@ -45,9 +49,9 @@ module.exports = graphql.buildSchema(`
     type RootQuery {
         login(email: String!, password: String!): AuthData!
         me : User!
-        deckList: [Deck!]
+        deckList(userId: ID!): [Deck!]
         cardList: [Card!]
-        deck(id: ID!): Deck
+        deck(id: ID!): Deck!
     }
 
     type RootMutation {

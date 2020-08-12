@@ -6,7 +6,7 @@ import { appReducer } from "./reducers/appReducer";
 
 export const rootReducer = combineReducers({
     auth: authReducer,
-    deck: deckReducer,
-    card: cardReducer,
+    decks: deckReducer,
+    cards: cardReducer,
     app: appReducer,
 });

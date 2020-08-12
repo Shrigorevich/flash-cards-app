@@ -13,12 +13,20 @@ module.exports = {
             if (existingDeck) {
                 throw new Error('A deck with the same name already exists!');
             }
+            console.log({
+                name: args.deck.name,
+                description: args.deck.description,
+                user: args.deck.user,
+                public: args.deck.public,
+                cards_number: args.deck.cards_number,
+            });
 
             const deck = new Deck({
                 name: args.deck.name,
                 description: args.deck.description,
-                userId: '20987252454506345', //req.payload['sub'],
+                user: args.deck.user, //req.payload['sub'],
                 public: args.deck.public,
+                cards_number: args.deck.cards_number,
             });
 
             return deck.save();
@@ -29,22 +37,22 @@ module.exports = {
     },
 
     deck: async (args, req) => {
-        console.log('Deck', Counter);
+        console.log('Deck', args);
         try {
-            Counter += 1;
-            const existingDeck = await Deck.findById({
-                _id: args.id,
-            });
+            const existingDeck = await Deck.findById(args.id).populate('user');
+            console.log('existingDeck: ', existingDeck);
             return existingDeck;
         } catch (error) {
+            console.log(error);
             return error;
         }
     },
 
     deckList: async (args, req) => {
+        console.log('Fetch decks');
         try {
             //TODO: USER ID FILTER
-            return Deck.find();
+            return Deck.find({ user: args.userId }).populate('user');
         } catch (error) {
             console.log(error);
             return error;

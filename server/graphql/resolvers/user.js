@@ -1,15 +1,15 @@
-const bcrypt = require('bcryptjs');
+const User = require('../../models/User');
 
 module.exports = {
     me: async (args, req) => {
         console.log('Me', req.isAuth);
 
         if (req.isAuth) {
-            return {
-                first_name: req.payload.given_name,
-                last_name: req.payload.family_name,
+            const existingUser = await User.findOne({
                 email: req.payload.email,
-            };
+            });
+
+            return existingUser;
         } else {
             return null;
         }

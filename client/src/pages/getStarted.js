@@ -26,10 +26,12 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "18px",
         "& h1": {
             fontSize: "4rem",
+            color: "#fff",
         },
         "& h2": {
             fontSize: "2rem",
             marginBottom: "12px",
+            color: "#fff",
         },
     },
     typography: {
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GetStarted = (props) => {
+    console.log("GetStarted");
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();

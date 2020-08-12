@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import Dashboard from "../components/Dashboard";
-import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
 import Redirect from "../components/Redirect";
+import WorkSpace from "../components/WorkSpace";
+import Menu from "./../components/Menu";
 
 const Home = (props) => {
-    //console.log();
-
     const { loading, error } = useSelector((state) => {
         return {
             loading: state.app.loading,
@@ -18,8 +18,9 @@ const Home = (props) => {
     if (error || !localStorage.getItem("token")) return <Redirect />;
 
     return (
-        <div>
-            <Dashboard />
+        <div className="home">
+            <Menu />
+            <WorkSpace />
         </div>
     );
 };

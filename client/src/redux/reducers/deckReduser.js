@@ -1,15 +1,16 @@
 import { CREATE_DECK, FETCH_DECKS } from "../types";
 
 const initialState = {
-    decks: [],
+    list: [],
+    newDeck: null,
 };
 
 export const deckReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case CREATE_DECK:
-        //     return { ...state, decks: action.deck };
+        case CREATE_DECK:
+            return { ...state, newDeck: action.deck };
         case FETCH_DECKS:
-            return { ...state, decks: action.payload };
+            return { ...state, list: action.payload };
         default:
             return state;
     }

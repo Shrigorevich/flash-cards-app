@@ -1,7 +1,7 @@
 import { CREATE_CARD, GET_CARD_LIST } from "../types";
 
 const initialState = {
-    card: null,
+    cards: null,
 };
 
 export const cardReducer = (state = initialState, action) => {
